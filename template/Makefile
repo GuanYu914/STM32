@@ -1,5 +1,5 @@
 # define project name as PROJ_NAME var.
-PROJ_NAME = Led
+PROJ_NAME = Template
 
 # add a path for building tools
 TOOLS_DIR = /usr/bin
