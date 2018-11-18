@@ -1,5 +1,5 @@
 # define project name as PROJ_NAME var.
-PROJ_NAME = Template
+PROJ_NAME = Led
 
 # add a path for building tools
 TOOLS_DIR = /usr/bin
@@ -54,22 +54,21 @@ CFLAGS  = -ggdb               \
 LFLAGS  = -Wl,-T,./links/stm32_flash.ld
 
 # add some libraries to build for whole project
-INC_DIRS  = ./inc
-INC_DIRS += ./lib/STM32F4xx_StdPeriph_Driver/inc
-INC_DIRS += ./lib/CMSIS/Include
-INC_DIRS += ./lib/CMSIS/Device/ST/STM32F4xx/Include
+INC_DIRS  = ./user/inc                              \
+	    ./lib/STM32F4xx_StdPeriph_Driver/inc    \
+	    ./lib/CMSIS/Include                     \
+	    ./lib/CMSIS/Device/ST/STM32F4xx/Include 
 
 # add source files for this project
 ST_DIR=./lib/STM32F4xx_StdPeriph_Driver/src
-SRCS  = ./src/system_stm32f4xx.c
-SRCS += ./src/stm32f4xx_it.c
-SRCS += $(ST_DIR)/stm32f4xx_rcc.c   \
-	$(ST_DIR)/stm32f4xx_gpio.c  \
-	$(ST_DIR)/stm32f4xx_usart.c \
-	$(ST_DIR)/stm32f4xx_syscfg.c
+SRCS = 	$(ST_DIR)/stm32f4xx_rcc.c       \
+	$(ST_DIR)/stm32f4xx_gpio.c      \
+	./user/src/system_stm32f4xx.c   \
+	./user/src/stm32f4xx_it.c       \
+	./user/src/delay.c
 
 # here major program is
-SRCS += ./src/main.c
+SRCS += ./user/src/main.c
 
 # add a path that point to startup file 
 STARTUP = ./lib/CMSIS/Device/ST/STM32F4xx/Source/Templates/TrueSTUDIO/startup_stm32f40_41xxx.s
