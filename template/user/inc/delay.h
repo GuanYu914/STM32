@@ -1,6 +1,7 @@
 #ifndef __DELAY_H
 #define __DELAY_H
 
+/* In order to use u32 variable.*/
 #include "stm32f4xx.h"
 
 void SysTick_Init(void);
