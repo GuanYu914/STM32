@@ -17,11 +17,13 @@ int main(void)
 	// Initialize the delay time for 1us 
 	SysTick_Init();
 	
+	// When the speed of gpio pin is too high, the noise in the circuit will increase
 	// Setup led to push-pull mode and pull-up resistor
+	// The pull-up resistor can ensure the signal to avoid floating status
 	GPIO_InitTypeDef GPIO_InitStructure;
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_10 ;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_25MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOF, &GPIO_InitStructure);
@@ -34,7 +36,7 @@ int main(void)
   	while (1)
   	{
 		/* main code here */
-	    	
+	    		
 	    	// if cnt is equal to 11, set it to zero
 	    	// 0x0b is 11 in hex format
 	    	if((cnt & 0x0b) == 0x0b )
@@ -45,11 +47,11 @@ int main(void)
 			cnt++;
 		}
 		
-		// Attention: GPIO_ResetBits() will turn on led because the led is connect to pull-up resistor
-		// Attention: GPIO_SetBits() will turn of led because the led is connect to pull-up resistor
+		// Attention: GPIO_ResetBits() will turn on led because the NMOS is enable 
+		// Attention: GPIO_SetBits() will turn of led because the PMOS is enable
 		for(i = 0; i < cnt; i++)
 		{
-	    		GPIO_ResetBits(GPIOF, GPIO_Pin_9);
+		   	GPIO_ResetBits(GPIOF, GPIO_Pin_9);
 			delay_nms(time);	
 	    		GPIO_SetBits(GPIOF, GPIO_Pin_9);
 			delay_nms(time);	   
